@@ -1,0 +1,31 @@
+class Solution {
+    public int dfs(int i, int n, int[] dp, int[] nums){
+        if(i>=n){
+            return 0;
+        }
+
+        if(dp[i]!=-1){
+            return dp[i];
+        }
+
+        int pick=nums[i]+dfs(i+2, n, dp, nums);
+        int notpick=dfs(i+1, n, dp, nums);
+
+        dp[i]=Math.max(pick, notpick);
+        return dp[i];
+    }
+
+    public int rob(int[] nums) {
+        int n=nums.length;
+        if(n==1){
+            return nums[0];
+        }
+
+        int[] dp1=new int[n];
+        int[] dp2=new int[n];
+        Arrays.fill(dp1, -1);
+        Arrays.fill(dp2, -1);
+
+        return Math.max(dfs(0, n-1, dp1, nums), dfs(1, n, dp2, nums));
+    }
+}
